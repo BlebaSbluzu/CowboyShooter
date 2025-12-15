@@ -37,6 +37,7 @@ class LeaderboardActivity : AppCompatActivity() {
         fetchPlayerWinsLeaderboard()
     }
 
+    // fetches the leaderboard and fills out the textview with the top 10 times
     private fun fetchPlayerWinsLeaderboard() {
         resultsTextView.text = "Loading top 10 player wins..."
 
@@ -68,10 +69,9 @@ class LeaderboardActivity : AppCompatActivity() {
                 Toast.makeText(this, "Leaderboard Fetched!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
-                resultsTextView.text = "Error fetching data. Check Android Studio Logcat for details."
+                resultsTextView.text = "Error fetching data."
                 Log.e(TAG, "LEADERBOARD FETCH FAILED.", exception)
-                Log.e(TAG, "COMMON FIX: Check Firebase Console -> Firestore -> Indexes. The query requires a composite index on 'winner' (ASC) and 'playerTimeSeconds' (ASC).")
-                Toast.makeText(this, "Failed to load leaderboard. See logs.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Failed to load leaderboard.", Toast.LENGTH_LONG).show()
             }
     }
 }

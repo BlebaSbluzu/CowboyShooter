@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private var gameStartTime: Long = 0L
     private var botReactionTime: Float = 0f
     private var countdownTimer: CountDownTimer? = null
-    private val MAGNITUDE_THRESHOLD = 1500f
+    private val MAGNITUDE_THRESHOLD: Float = 1500f
 
     private val requestPerms = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         startConnect()
     }
 
+    // Struct that holds all data for duel
     data class DuelResult(
         val playerTimeSeconds: Float = 0f,
         val botTimeSeconds: Float = 0f,
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         val timestamp: Long = 0L
     )
 
-
+    // Handles all on start calls such as setting up listeners
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -84,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         setupMicrobitListeners()
     }
 
+    // This function starts/resets the game state
     private fun startGame(){
 
         cowboyimage.setImageResource(R.drawable.cowboy1)
@@ -101,6 +103,7 @@ class MainActivity : AppCompatActivity() {
 
         val waitTimeMs = Random.nextLong(3000, 6001)
 
+        // Timer for game start
         countdownTimer = object : CountDownTimer(waitTimeMs, 1000) {
             override fun onTick(millisUntilFinished: Long) {
             }
@@ -117,6 +120,8 @@ class MainActivity : AppCompatActivity() {
         }.start()
     }
 
+    // If the player has checked all the requirements for playing it checks whether
+    // player or bot wins
     private fun checkWinner (playerMagnitude : Float) {
 
         cowboyimage.setImageResource(R.drawable.cowboyshoot)
@@ -165,6 +170,7 @@ class MainActivity : AppCompatActivity() {
         leaderboardButton.visibility = View.VISIBLE
     }
 
+    // Saves the duel to DB and Toasts
     private fun saveDuelResult(playerSpeed: Float, botSpeed: Float, winner: String) {
         val result = DuelResult(
             playerTimeSeconds = playerSpeed,
@@ -224,6 +230,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Gets permissions needed for Microbit connection
     private fun ensurePermissionsThenConnect() {
         val perms = mutableListOf<String>()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -236,6 +243,7 @@ class MainActivity : AppCompatActivity() {
         requestPerms.launch(perms.toTypedArray())
     }
 
+    // Begins the connection to the MB
     private fun startConnect() {
         statusText.text = "Status: Connecting..."
         microbitManager.scanAndConnect { msg ->
