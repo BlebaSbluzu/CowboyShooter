@@ -95,8 +95,8 @@ class MainActivity : AppCompatActivity() {
         playerShotTime = 0L
         statusText.text = "Status: Wait for 'SHOOT'..."
 
-        val minBotMs = 750
-        val maxBotMs = 1800
+        val minBotMs = 650
+        val maxBotMs = 1200
         botReactionTime = (minBotMs + Random.nextFloat() * (maxBotMs - minBotMs)) / 1000f
 
         val waitTimeMs = Random.nextLong(3000, 6001)
@@ -190,10 +190,11 @@ class MainActivity : AppCompatActivity() {
                 val trimmedLine = line.trim()
 
                 val parts = trimmedLine.split(",")
-                if (parts.size >= 3) {
+                if (parts.size >= 4) {
                     val x = parts[0].toFloatOrNull() ?: 0f
                     val y = parts[1].toFloatOrNull() ?: 0f
                     val z = parts[2].toFloatOrNull() ?: 0f
+                    val shot = parts[3].toString()
 
                     val magnitude = kotlin.math.sqrt(x * x + y * y + z * z)
 

@@ -46,7 +46,7 @@ class LeaderboardActivity : AppCompatActivity() {
             .limit(10)
             .get()
             .addOnSuccessListener { result ->
-                val sb = StringBuilder("🏆 TOP 10 PLAYER WINS 🏆\n\n")
+                val sb = StringBuilder("\n")
                 var rank = 1
 
                 if (result.isEmpty) {
@@ -65,7 +65,7 @@ class LeaderboardActivity : AppCompatActivity() {
                     }
                 }
                 resultsTextView.text = sb.toString()
-                Toast.makeText(this, "Leaderboard updated!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Leaderboard Fetched!", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
                 resultsTextView.text = "Error fetching data. Check Android Studio Logcat for details."
